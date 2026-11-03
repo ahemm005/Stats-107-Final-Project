@@ -2,6 +2,12 @@
 
 mhi = read.csv("../ACSDT5Y2023.B19013-Data.csv") 
 ## median household income by county data
+mhi <- mhi %>%
+  rename(
+    Median_Household_Income = B19013_001E,
+    Income_MOE = B19013_001M
+  )
+## rename columns in raw data set for better readability 
 dp = read.csv("../PLACES__Local_Data_for_Better_Health,_County_Data,_2025_release_20261102.csv")
 ## disease percentage by county data
 
@@ -15,7 +21,7 @@ comp_data = comp_data %>%
   select(
     FIPS,
     NAME,
-    B19013_001E,
+    Median_Household_Income,
     Year,
     Measure,
     Data_Value,

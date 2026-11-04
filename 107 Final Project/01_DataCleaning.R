@@ -2,6 +2,8 @@
 
 mhi = read.csv("../ACSDT5Y2023.B19013-Data.csv") 
 ## median household income by county data
+mhi = mhi[-1, ]
+#Remove sentences in raw data
 mhi <- mhi %>%
   rename(
     Median_Household_Income = B19013_001E,
@@ -24,6 +26,7 @@ comp_data = comp_data %>%
     Median_Household_Income,
     Year,
     Measure,
+    MeasureId,
     Data_Value,
     TotalPopulation
   )

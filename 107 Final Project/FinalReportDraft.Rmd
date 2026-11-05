@@ -40,19 +40,44 @@ What is the data available for performing the analysis? Where did you retrieve t
 
 - US Census Bureau's data set for "Median Household Income in the Past 12 Months in 2023"
 @ https://data.census.gov/table/ACSDT5Y2023.B19013
-We rename the variables for clarity and use the FIPS codes in the 6th column against the next data set.
+This data set includes 3222 observations across 5 variables representing the geographic ID of a county, the name of the county, the median income, the margin of error, and the FIPS codes of the households surveyed. We renamed the variables and removed unneeded columns for clarity and used the FIPS codes in the 6th column against the next data set.
 ```{r}
-area <- mhi$GEO_ID
-income <- mhi$B19013_001E
-
-names(mhi)[c(1, 2, 3, 4)] <- c("County ID", "County Name", "Income (USD)", "Margin of Error (+/- USD)")
+mhi <- read.csv("ACSDT5Y2023.B19013-Data.csv") 
+## median household income by county data
+names(mhi)[c(2, 3)] <- c("County Name", "Income (USD)")
+mhi <- mhi[, -c(4, 5)]
 
 head(mhi)
 ```
 - CDC data set for "Local Data for Better Health, County Data in 2025"
 @ https://data.cdc.gov/500-Cities-Places/PLACES-Local-Data-for-Better-Health-County-Data-20/swc5-untb/about_data
-We rename the variables for clarity and use the FIPS codes in the _ column against the previous data set to construct our correlation maps.
+This data set includes 229298 observations across 22 variables representing both location names (geographic ID, state name, etc) and the estimates for measures (health outcomes, health status, disability, etc) within those locations. We found the FIPS codes for each observation's location to compare data sets. We renamed the variables and removed unneeded columns for clarity and used the FIPS codes in the last column against the previous data set to construct our correlation maps.
 ```{r}
+dp <- read.csv("PLACES__Local_Data_for_Better_Health,_County_Data,_2025_release_20261102.csv")
+## disease percentage by county data
+names(dp)[c(4, 10, 21)] <- c("County Name", "Percentage of Population", "Health Status")
+dp <- dp[, -c(1, 2, 3, 5, 6, 7, 8, 9, 11, 12, 13, 14, 15, 16, 18, 19, 20)]
+
+head(dp)
+```
+- Combining the data sets
+```{r}
+mhi$FIPS = substr(mhi$GEO_ID, nchar(mhi$GEO_ID) - 4 ,nchar(mhi$GEO_ID))
+dp$FIPS = as.numeric(dp$LocationID)
+#clean each dataset and have a similar row of FIP codes
+comp_data = merge(mhi, dp, by = "FIPS", check.names = FALSE)
+#combine the two datasets into a single dataset to make comparisons easier
+
+comp_data = comp_data %>% select(
+  FIPS,
+  `County Name.x`,
+  'County Name.y`
+  `Income (USD)`,
+  `Health Status`,
+  `Percentage of Population`,
+  TotalPopulation
+)
+#clean comparison data to the columns we need
 ```
 
 

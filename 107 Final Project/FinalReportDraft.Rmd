@@ -71,7 +71,7 @@ comp_data = merge(mhi, dp, by = "FIPS", check.names = FALSE)
 comp_data = comp_data %>% select(
   FIPS,
   `County Name.x`,
-  'County Name.y`
+  'County Name.y`,
   `Income (USD)`,
   `Health Status`,
   `Percentage of Population`,

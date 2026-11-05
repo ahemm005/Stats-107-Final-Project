@@ -33,4 +33,5 @@ comp_data = comp_data %>%
     Data_Value,
     TotalPopulation
   )
+write.csv(comp_data, "cleaned_county_data.csv", row.names = FALSE)
 #clean comparison data to the columns we need

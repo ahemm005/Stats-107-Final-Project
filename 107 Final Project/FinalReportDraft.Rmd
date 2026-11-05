@@ -13,8 +13,8 @@ knitr::opts_chunk$set(echo = TRUE)
 Give a title to your project. In an abstract of 200 words or less, describe what is
 the main question you aim to answer, and a brief summary of your current results.
 
-- TITLE: 
-
+- TITLE: Investigating Possible Income-Dependence in Disease and Illness
+- This is an observational study using two publicly available data sets to analyze correlation between income and various health statuses. We investigate using median household income by county in the United States data from the US Census Bureau and population health data by county in the United States by the CDC. Using the computational tool R, we combine the data sets and isolate comparisons for analysis with the following findings. Health status seems to be negatively correlated with income. That is, the data shows counties with higher median household incomes had less adverse health statuses across various types of health status and various income brackets. The report will delve into the method and matter of this study and provide visual maps which depict the correlation we found.
 
 # Intro
 What is the central question that motivates your analysis? Who may this analysis
@@ -30,9 +30,9 @@ To realize these possible benefits, we are creating correlation maps using publi
 Provide, in a series of 3-5 bulletpoints, what are the core conclusions and
 findings of your analysis so far.
 
-- Negative correlation between increasing income and disease rate # this may be too general a finding since I haven't named a disease
-- # specific health outcome correlation
-- # another, dif specific health outcome correlation
+- (1) Negative correlation between increasing income and disease rate # this may be too general a finding since I haven't named a disease
+- (2) We found that income is specifically negatively correlated with ___ in a population. We visualize this correlation under "Visualizations" below. # specific health outcome correlation (we can use obesity, diabetes, arthritis, etc)
+- (3) We found that income was not solely negatively correlated with disease of the body. In regards to psychological disease, the data set we chose showed lower income brackets had a higher prevalence for depression, too. We visualize this correlation below as well. # another, dif specific health outcome correlation
 
 
 # Data
@@ -71,7 +71,7 @@ comp_data = merge(mhi, dp, by = "FIPS", check.names = FALSE)
 comp_data = comp_data %>% select(
   FIPS,
   `County Name.x`,
-  'County Name.y`,
+  `County Name.y`,
   `Income (USD)`,
   `Health Status`,
   `Percentage of Population`,
@@ -86,11 +86,22 @@ Provide preliminary visualizations in the form of histograms, density plots, sca
 plots, box-plots, and numerical summaries of the data, depending on the type of analysis. What do these visualizations suggest about the hypothesis, model or simulation you are aiming to perform? If you aim to generate further data visualizations, describe them here.
 
 - #correlation maps that justify the three bullet points under the Executive Summary
-
+- (2) (______ is higher/lower in higher/lower incomes)
+- (3) (depression is lower in higher incomes)
 
 
 # Analysis
 Provide some preliminary plans of what analysis you aim to complete. Mention models,
 tests, procedures, and some ideas of what expected outcomes you hope to find
-- # analysis blurb
+
+- # analysis blurb outline below
+
+- A closer look into Visualization #1 shows us that...
+  - # Numerical summary here !!:
+  - We expect a similar/different result from...
+  - To test this expectation, we propose...
+- A closer look into Visualization #2 shows us that... depression in the US is negatively correlated with income. The x-axis shows income divided into 6 bins which replicate different tax brackets as income brackets. The y-axis shows the amount of health statuses per county showed "Depression".
+  - # Numerical summary here !!:
+  - We expect a similar result from... other mental health illnesses as a generalization due to their negative effect on the mind being      similar to depression's negative effect. However, causal impact is unclear in our findings as it is unknown whether income causes the      depression rate, vice versa, or another unexplored variable causes both.
+  - To test this expectation, we propose...
 

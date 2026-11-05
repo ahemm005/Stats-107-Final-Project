@@ -1,0 +1,71 @@
+---
+title: "STAT107_Halfway_Report"
+author: "TEAM 5"
+date: "2026-11-03"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Abstract: 
+Give a title to your project. In an abstract of 200 words or less, describe what is
+the main question you aim to answer, and a brief summary of your current results.
+
+- TITLE: 
+
+
+# Intro
+What is the central question that motivates your analysis? Who may this analysis
+benefit? Are you trying to train a model, test a hypothesis, classify objects apart? Why? This has to
+be written with proper grammar and syntax: sentences, paragraphs, and a narrative structure.
+
+- The question we are seeking to answer is whether income has an effect on disease. Will median household income show a correlation to disease proclivity? This information would be beneficial in creating policy to target decreasing disease in populations who are affected more and prevention in populations who aren't. Alternatively, certain companies and investors may be able to benefit from such a relationship being found by allowing insight into the likelihood of certain investments succeeding in a population due to their proximity to disease and their relative wealth.
+
+To realize these possible benefits, we are creating correlation maps using publicly available data on the incomes of household in the US and comparing these numbers to CDC estimates from 2025 for health status.
+
+
+# Executive Summary
+Provide, in a series of 3-5 bulletpoints, what are the core conclusions and
+findings of your analysis so far.
+
+- Negative correlation between increasing income and disease rate # this may be too general a finding since I haven't named a disease
+- # specific health outcome correlation
+- # another, dif specific health outcome correlation
+
+
+# Data
+What is the data available for performing the analysis? Where did you retrieve these data from? What are the variables and number of observations available? What steps where performed to clean the data? If the data is obtained via randomized simulations, clarify the data generating procedure
+
+- US Census Bureau's data set for "Median Household Income in the Past 12 Months in 2023"
+@ https://data.census.gov/table/ACSDT5Y2023.B19013
+We rename the variables for clarity and use the FIPS codes in the 6th column against the next data set.
+```{r}
+area <- mhi$GEO_ID
+income <- mhi$B19013_001E
+
+names(mhi)[c(1, 2, 3, 4)] <- c("County ID", "County Name", "Income (USD)", "Margin of Error (+/- USD)")
+
+head(mhi)
+```
+- CDC data set for "Local Data for Better Health, County Data in 2025"
+@ https://data.cdc.gov/500-Cities-Places/PLACES-Local-Data-for-Better-Health-County-Data-20/swc5-untb/about_data
+We rename the variables for clarity and use the FIPS codes in the _ column against the previous data set to construct our correlation maps.
+```{r}
+```
+
+
+# Visualization
+Provide preliminary visualizations in the form of histograms, density plots, scatter
+plots, box-plots, and numerical summaries of the data, depending on the type of analysis. What do these visualizations suggest about the hypothesis, model or simulation you are aiming to perform? If you aim to generate further data visualizations, describe them here.
+
+- #correlation maps that justify the three bullet points under the Executive Summary
+
+
+
+# Analysis
+Provide some preliminary plans of what analysis you aim to complete. Mention models,
+tests, procedures, and some ideas of what expected outcomes you hope to find
+- # analysis blurb
+

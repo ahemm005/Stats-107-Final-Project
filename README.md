@@ -16,9 +16,20 @@ DATA FILES:
 -   DataValue: The percentage of adults diagnosed with the specific disease in that county
 
 R FILES:
+# 00_requirements.R
+- required packages needed (so far: tidyverse, dplyr ggplot2)
+
 # 01_DataCleaning.R
+- import, clean, and rename the two data sets
+- merge them to one data frame, including necessary columns 
+- create a new .csv file cleaned_county_data which is the merged and cleaned data set
+
 # 02_DiabetesAnalysis.R
 -   Loads cleaned county dataset and filters rows to isolate diabetes records.
 -   Calculates min, max, means, medians, and sd for median household income and diabetes prevelance
 -   Quadratic regression model
 -   Generated a scatterplot that compares Median Household Income to Diabetes Prevelance %
+
+# FinalReportDraft
+- Our final report including the necessary outline and individual contributions 
+

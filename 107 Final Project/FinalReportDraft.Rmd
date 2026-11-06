@@ -135,3 +135,19 @@ tests, procedures, and some ideas of what expected outcomes you hope to find
   - We expect a similar result from other mental health illnesses as a generalization due to the illnesses negative effect on the mind       being similar to depression's negative effect. However, causal impact is unclear in our findings as it is unknown whether income causes    the depression rate, vice versa, or another unexplored variable causes both.
   - To test this expectation, we propose lab and/or field experimentation to be done
 
+# Summary of Individual Contribution
+Vanessa:
+Added to the 01_DataCleaning.R file:
+- Renamed columns for legibility
+- Removed first row of raw data (descriptive text) 
+- Converted necessary variables to numerical values (R was reading them as text instead of numbers)
+
+Created the 02_DiabetesAnalysis.R file:
+- Creating a dataframe for Diabetes disease
+- Summarize results from Diabetes dataframe (max, min, standard deviation for diabetes prevelance & household income)
+- Scatterplot with regression line for visualization, comparing median household income with diabetes prevelance 
+
+Alexandra:
+
+Andrea:
+

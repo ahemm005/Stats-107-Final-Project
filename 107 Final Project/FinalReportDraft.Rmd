@@ -225,7 +225,9 @@ Diabetes disease, summarize results from Diabetes dataframe (max, min,
 standard deviation for diabetes prevalence & household income), scatterpolt with regression line for visualization that compares median
 household income with diabetes prevalence
 
-Created the FinalReportDraft and added the appropriate sections required for the report including the Summary of Individual Contributions 
+Created the FinalReportDraft and added the appropriate sections required for the report including the Summary of Individual Contributions
+
+Contributed to README file describing the raw data sets, and the 00, 01, and 02 r files.
 
 **Alexandra**: Created the 00_requirements.R file: added all necessary
 packages.

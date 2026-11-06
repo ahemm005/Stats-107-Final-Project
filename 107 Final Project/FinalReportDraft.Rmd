@@ -217,6 +217,9 @@ outcomes you hope to find
   literature, and analyzing our results we intend on creating some sort
   of answer.
 
+# GitHub Link:
+https://github.com/ahemm005/Stats-107-Final-Project.git
+
 # Summary of Individual Contribution
 
 **Vanessa**: Added to the 01_DataCleaning.R file: Renamed columns for

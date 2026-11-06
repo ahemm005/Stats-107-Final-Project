@@ -5,3 +5,6 @@ library(tidyverse)
 
 packages = installed.packages(c("dplyr"))
 library(dplyr)
+
+packages = installed.packages(c("ggplot2"))
+library(ggplot2)

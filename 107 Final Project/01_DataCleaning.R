@@ -15,12 +15,13 @@ dp = read.csv("../PLACES__Local_Data_for_Better_Health,_County_Data,_2025_releas
 
 mhi$FIPS = substr(mhi$GEO_ID, nchar(mhi$GEO_ID) - 4 ,nchar(mhi$GEO_ID))
 dp$FIPS = as.numeric(dp$LocationID)
-comp_data$Median_Household_Income <- as.numeric(comp_data$Median_Household_Income)
-comp_data$TotalPopulation <- as.numeric(comp_data$TotalPopulation)
 #clean each dataset and have a similar row of FIP codes
-#convert necessary variables (Median_Household_Income, TotalPopulation) to numeric values 
+
 comp_data = merge(mhi, dp, by = "FIPS")
 #combine the two datasets into a single dataset to make comparisons easier
+comp_data$Median_Household_Income <- as.numeric(comp_data$Median_Household_Income)
+comp_data$TotalPopulation <- as.numeric(comp_data$TotalPopulation)
+#convert necessary variables (Median_Household_Income, TotalPopulation) to numeric values 
 
 comp_data = comp_data %>%
   select(

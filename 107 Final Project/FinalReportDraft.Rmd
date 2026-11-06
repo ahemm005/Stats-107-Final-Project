@@ -3,151 +3,244 @@ title: "STAT107_Halfway_Report"
 author: "TEAM 5"
 date: "2026-11-03"
 output: pdf_document
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE
+  )
+packages = installed.packages(c("ggplot2"))
+library(ggplot2)
+packages = installed.packages(c("tidyverse"))
+library(tidyverse)
+packages = installed.packages(c("dplyr"))
+library(dplyr)
 ```
 
-# Abstract: 
-Give a title to your project. In an abstract of 200 words or less, describe what is
-the main question you aim to answer, and a brief summary of your current results.
+# Abstract:
+
+Give a title to your project. In an abstract of 200 words or less,
+describe what is the main question you aim to answer, and a brief
+summary of your current results.
 
 - TITLE: Investigating Possible Income-Dependence in Disease and Illness
-- This is an observational study using two publicly available data sets to analyze correlation between income and various health statuses. We investigate using median household income by county in the United States data from the US Census Bureau and population health data by county in the United States by the CDC. Using the computational tool R, we combine the data sets and isolate comparisons for analysis with the following findings. Health status seems to be negatively correlated with income. That is, the data shows counties with higher median household incomes had less adverse health statuses across various types of health status and various income brackets. The report will delve into the method and matter of this study and provide visual maps which depict the correlation we found.
+- This is an observational study using two publicly available data sets
+  to analyze correlation between income and various health statuses. We
+  investigate using median household income by county in the United
+  States data from the US Census Bureau and population health data by
+  county in the United States by the CDC. Using the computational tool
+  R, we combine the data sets and isolate comparisons for analysis with
+  the following findings. Health status seems to be negatively
+  correlated with income. That is, the data shows counties with higher
+  median household incomes had less adverse health statuses across
+  various types of health status and various income brackets. The report
+  will delve into the method and matter of this study and provide visual
+  maps which depict the correlation we found.
 
 # Intro
-What is the central question that motivates your analysis? Who may this analysis
-benefit? Are you trying to train a model, test a hypothesis, classify objects apart? Why? This has to
-be written with proper grammar and syntax: sentences, paragraphs, and a narrative structure.
 
-- The question we are seeking to answer is whether income has an effect on disease. Will median household income show a correlation to disease proclivity? This information would be beneficial in creating policy to target decreasing disease in populations who are affected more and prevention in populations who aren't. Alternatively, certain companies and investors may be able to benefit from such a relationship being found by allowing insight into the likelihood of certain investments succeeding in a population due to their proximity to disease and their relative wealth.
+What is the central question that motivates your analysis? Who may this
+analysis benefit? Are you trying to train a model, test a hypothesis,
+classify objects apart? Why? This has to be written with proper grammar
+and syntax: sentences, paragraphs, and a narrative structure.
 
-To realize these possible benefits, we are creating correlation maps using publicly available data on the incomes of household in the US and comparing these numbers to CDC estimates from 2025 for health status.
+- The question we are seeking to answer is whether income (whether it be
+  higher or lower) has an effect on disease prevalence. Will median
+  household income show a correlation to disease proclivity? If increase
+  in income does prove to have a negative affect on disease prevalence,
+  the information we find could possibly help find a solution to this
+  issue. Whether that be providing ways for lower-income individuals an
+  easier way to access the healthcare that they need, or to help provide
+  better conditions to prevent the diseases from occurring.
+  Alternatively, certain companies and investors may be able to benefit
+  from such a relationship being found by allowing insight into the
+  likelihood of certain investments succeeding in a population due to
+  their proximity to disease and their relative wealth.
 
+To realize these possible benefits, we are creating correlation maps
+using publicly available data on the incomes of household in the US and
+comparing these numbers to CDC estimates from 2025 for health status.
 
 # Executive Summary
-Provide, in a series of 3-5 bulletpoints, what are the core conclusions and
-findings of your analysis so far.
 
-- (1) Negative correlation between increasing income and disease rate # this may be too general a finding since I haven't named a disease
-- (2) We found that income is specifically negatively correlated with ___ in a population. We visualize this correlation under "Visualizations" below. # specific health outcome correlation (we can use obesity, diabetes, arthritis, etc)
-- (3) We found that income was not solely negatively correlated with disease of the body. In regards to psychological disease, the data set we chose showed lower income brackets had a higher prevalence for depression, too. We visualize this correlation below as well. # another, dif specific health outcome correlation
+- Provide, in a series of 3-5 bullet points, what are the core
+  conclusions and findings of your analysis so far.
 
+  1.  Negative correlation between increasing income and disease rate.
+      Although not looked into for all diseases, we are projecting our
+      observations of Diabetes prevalence in correlation to income.
+  2.  Through a regression model, we can see that Median Household
+      Income is statistically significant, and that it accurately
+      explains \~45% of the variation in diabetes prevalence.
+  3.  Through linear and quadratic regression we can see that the model
+      (for Diabetes) is quadratic, with diabetes prevalence decreasing
+      at lower incomes, but slowly leveling out. At some point, the line
+      even upturns very little. Minimum diabetes prevalence is around
+      median income of \$108k.
+  4.  Through a quick graph of depression prevalence, we have a pretty
+      similar relationship. Most significantly, it is also a quadratic
+      line, representing a negative relationship with a decreasing
+      prevalence as income increase. However, the most notable
+      difference as of now is the depression graph doesn't show any
+      upturn at any moment, suggesting that prevalence continually
+      decreases.
 
 # Data
-What is the data available for performing the analysis? Where did you retrieve these data from? What are the variables and number of observations available? What steps where performed to clean the data? If the data is obtained via randomized simulations, clarify the data generating procedure
 
-- US Census Bureau's data set for "Median Household Income in the Past 12 Months in 2023"
-@ https://data.census.gov/table/ACSDT5Y2023.B19013
-This data set includes 3222 observations across 5 variables representing the geographic ID of a county, the name of the county, the median income, the margin of error, and the FIPS codes of the households surveyed. We renamed the variables and removed unneeded columns for clarity and used the FIPS codes in the 6th column against the next data set.
-```{r}
-mhi <- read.csv("ACSDT5Y2023.B19013-Data.csv") 
-## median household income by county data
-names(mhi)[c(2, 3)] <- c("County Name", "Income (USD)")
-mhi <- mhi[, -c(4, 5)]
+What is the data available for performing the analysis? Where did you
+retrieve these data from? What are the variables and number of
+observations available? What steps where performed to clean the data? If
+the data is obtained via randomized simulations, clarify the data
+generating procedure
 
-head(mhi)
-```
+- US Census Bureau's data set for "Median Household Income in the Past
+  12 Months in 2023" \@
+  <https://data.census.gov/table/ACSDT5Y2023.B19013> This data set
+  includes 3222 observations across 5 variables representing the
+  geographic ID of a county, the name of the county, the median income,
+  the margin of error, and the FIPS codes of the households surveyed. We
+  used this data set to show the different median household income in
+  each US county. To clean the data set, we first renamed the columns
+  for clarity. Then, we changed the GeoId into a compatible FIPS code.
+
 - CDC data set for "Local Data for Better Health, County Data in 2025"
-@ https://data.cdc.gov/500-Cities-Places/PLACES-Local-Data-for-Better-Health-County-Data-20/swc5-untb/about_data
-This data set includes 229298 observations across 22 variables representing both location names (geographic ID, state name, etc) and the estimates for measures (health outcomes, health status, disability, etc) within those locations. We found the FIPS codes for each observation's location to compare data sets. We renamed the variables and removed unneeded columns for clarity and used the FIPS codes in the last column against the previous data set to construct our correlation maps.
-```{r}
-dp <- read.csv("PLACES__Local_Data_for_Better_Health,_County_Data,_2025_release_20261102.csv")
-## disease percentage by county data
-names(dp)[c(4, 10, 21)] <- c("County Name", "Percentage of Population", "Health Status")
-dp <- dp[, -c(1, 2, 3, 5, 6, 7, 8, 9, 11, 12, 13, 14, 15, 16, 18, 19, 20)]
+  \@
+  <https://data.cdc.gov/500-Cities-Places/PLACES-Local-Data-for-Better-Health-County-Data-20/swc5-untb/about_data>
+  This data set includes 229298 observations across 22 variables
+  representing both location names (geographic ID, state name, etc) and
+  the estimates for measures (health outcomes, health status,
+  disability, etc) within those locations. Using this data set, we can
+  find the percentage amounts of disease from each county. To clean this
+  code, all we did was convert the FIPS code into a numeric.
 
-head(dp)
-```
-- Combining the data sets
-```{r}
-mhi$FIPS = substr(mhi$GEO_ID, nchar(mhi$GEO_ID) - 4 ,nchar(mhi$GEO_ID))
-dp$FIPS = as.numeric(dp$LocationID)
-#clean each dataset and have a similar row of FIP codes
-comp_data = merge(mhi, dp, by = "FIPS", check.names = FALSE)
-#combine the two datasets into a single dataset to make comparisons easier
+  With the FIPS code from each data set, we were able to merge the data
+  sets and compare them directly. To clean this new data set, we changes
+  the Median Household Income and the Total Population columns into
+  numerical data. Lastly, we kept only the necessary columns that we
+  were going to use.
 
-comp_data = comp_data %>% select(
-  FIPS,
-  `County Name.x`,
-  `County Name.y`,
-  `Income (USD)`,
-  `Health Status`,
-  `Percentage of Population`,
-  TotalPopulation
-)
-#clean comparison data to the columns we need
-```
-
+  After all of the data cleaning was done, we saved the new data set
+  into a new csv file.
 
 # Visualization
-Provide preliminary visualizations in the form of histograms, density plots, scatter
-plots, box-plots, and numerical summaries of the data, depending on the type of analysis. What do these visualizations suggest about the hypothesis, model or simulation you are aiming to perform? If you aim to generate further data visualizations, describe them here.
 
-- Diabetes is lower in higher incomes
+Provide preliminary visualizations in the form of histograms, density
+plots, scatter plots, box-plots, and numerical summaries of the data,
+depending on the type of analysis. What do these visualizations suggest
+about the hypothesis, model or simulation you are aiming to perform? If
+you aim to generate further data visualizations, describe them here.
+
+- By utilizing a simple scatter plot and a regression line, we can see
+  that diabetes has a negative relationship with Median Household
+  Income, meaning that as income increases diabetes is less prevalent.
+  However, seeing that the line is quadratic, we can see minimum
+  diabetes levels minimize at around \$108k median income. At every
+  income over \$108k, prevalence starts to rise again.
+
 ```{r}
+new_data <- read.csv("cleaned_county_data.csv")
+diabetes_data <- new_data %>% 
+  filter(MeasureId == "DIABETES")
+diabetes_data$Median_Household_Income = as.numeric(diabetes_data$Median_Household_Income)
 
+diabetes_plot = ggplot(diabetes_data, aes(x = Median_Household_Income, y = Data_Value)) +
+  geom_point(alpha = 0.3, color = "steelblue") +
+  geom_smooth(method = "lm", formula = y ~ x + I(x^2), color = "darkred", se = TRUE) +
+  labs(
+    title = "County Median Household Income vs. Diabetes Prevalence",
+    subtitle = "CDC PLACES & US Census ACS Data",
+    x = "Median Household Income ($)",
+    y = "Diabetes Prevalence (%)"
+  )
+diabetes_plot
 ```
-- Depression is lower in higher incomes
-``` {r, echo=FALSE}
-library(dplyr)
-library(ggplot2)
 
-depression_plot <- comp_data %>% 
-  filter(`Health Status` == "Depression") %>% 
-  # make income numeric and make six bins
-  mutate(`Income_Bins` = cut(as.numeric(`Income (USD)`), breaks = 6)) %>% 
-  ggplot(aes(x = Income_Bins, y = `Percentage of Population`)) + 
-  # points added w/ help
-  geom_jitter(alpha = 0.5, color = "darkorchid", width = 0.2) + 
-  geom_boxplot(alpha = 0.3, outlier.shape = NA) + 
+- We can use a similar method to visualize depression percentages.
+  Similarly to the diabetes graph, it is quadratic. However this graph
+  is different in that it's a negative quadratic, so as income continues
+  to increase, prevalence for depression decreases. For higher incomes,
+  it decreases slower.
+
+```{r, echo=FALSE}
+packages = installed.packages(c("ggplot2"))
+library(ggplot2)
+depression_plot <- new_data %>% 
+  mutate(Median_Household_Income = as.numeric(as.character(Median_Household_Income))) %>%
+  filter(MeasureId == "DEPRESSION") %>% 
+  ggplot(aes(x = Median_Household_Income, y = Data_Value)) + 
+  geom_point(alpha = 0.5, color = "darkorchid") + 
+  geom_smooth(
+    method = "lm",
+    formula = y ~ x + I(x^2),
+    color = "darkred",
+    se = TRUE
+  ) +
   theme_minimal() + 
-  # axis labels tilted bc they are long, so they won't overlap
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) + 
-  # labeled my axes
   labs( 
-    title = "Depression Prevalence across Income Brackets", 
-    x = "Income Intervals (USD)", 
-    y = "Percentage of Population" 
+    title = "Depression Prevalence vs. Median Household Income", 
+    subtitle = "CDC PLACES & US Census ACS Data",
+    x = "Median Household Income ($)", 
+    y = "Depression Prevalence (%)" 
   )
 
 print(depression_plot)
 
-
 ```
 
-
 # Analysis
-Provide some preliminary plans of what analysis you aim to complete. Mention models,
-tests, procedures, and some ideas of what expected outcomes you hope to find
 
-- # analysis blurb outline below
+Provide some preliminary plans of what analysis you aim to complete.
+Mention models, tests, procedures, and some ideas of what expected
+outcomes you hope to find
 
-- A closer look into Visualization #1 shows us that...
-  - # Numerical summary here !!:
-  - We expect a similar/different result from...
-  - To test this expectation, we propose...
-- A closer look into Visualization #2 shows us that... depression in the US is negatively correlated with income. The x-axis shows income divided into 6 bins which replicate different tax brackets as income brackets. The y-axis shows the amount of health statuses per county showed "Depression".
-  - The median depression rate lowered at each income bracket with...
-    - the lowest income bracket (25-51k/yr) at above 20%
-    - the highest income bracket (153-179k/yr) at below 20%
-  - We expect a similar result from other mental health illnesses as a generalization due to the illnesses negative effect on the mind       being similar to depression's negative effect. However, causal impact is unclear in our findings as it is unknown whether income causes    the depression rate, vice versa, or another unexplored variable causes both.
-  - To test this expectation, we propose lab and/or field experimentation to be done
+- So far, our project covers the models of 2 diseases in relation to
+  household income. Later on, we plan on creating more models, possibly
+  around 5 (of all different types - heart conditions, strokes, obesity,
+  etc.). We aim to do this in order to get more knowledge on the unknown
+  advantages of having higher income. Data will be compared and analyzed
+  thoroughly, and we will see if each disease continues to hold a
+  negative relationship against median income or if there are some that
+  have positive correlation. In the end, we hope to find at least one
+  disease that has a positive correlation. We strive to find logical
+  reasoning as to why this phenomena takes place - is it simply access
+  to better healthcare? is it inability to spend money on better
+  food/accomodations? is it difference in way of life and expectations
+  between different brackets of income? By comparing data, reading
+  literature, and analyzing our results we intend on creating some sort
+  of answer.
 
 # Summary of Individual Contribution
-Vanessa:
-Added to the 01_DataCleaning.R file:
-- Renamed columns for legibility
-- Removed first row of raw data (descriptive text) 
-- Converted necessary variables to numerical values (R was reading them as text instead of numbers)
 
-Created the 02_DiabetesAnalysis.R file:
-- Creating a dataframe for Diabetes disease
-- Summarize results from Diabetes dataframe (max, min, standard deviation for diabetes prevelance & household income)
-- Scatterplot with regression line for visualization, comparing median household income with diabetes prevelance 
+**Vanessa**: Added to the 01_DataCleaning.R file: - Renamed columns for
+legibility - Removed first row of raw data (descriptive text) -
+Converted necessary variables to numerical values (R was reading them as
+text instead of numbers)
 
-Alexandra:
+Created the 02_DiabetesAnalysis.R file: - Creating a dataframe for
+Diabetes disease - Summarize results from Diabetes dataframe (max, min,
+standard deviation for diabetes prevalence & household income) -
+Scatterplot with regression line for visualization, comparing median
+household income with diabetes prevalence
 
-Andrea:
+**Alexandra**: Created the 00_requirements.R file: added all necessary
+packages.
 
+Created the 01_DataCleaning.R file: Found, interpreted, called, cleaned,
+and combined the data.
+
+Added to the 02_DiabetesAnalysis.R file: Combed through data, corrected
+models. Initial models showed linear relationship, through more analysis
+(regression models) quadratic is a better fit.
+
+Finalized FinalReportDraft.Rmd: Fixed the code on the plot portion,
+removed unnecessary info, changed bullet-pointed information into
+finalized paragraphs.
+
+Created and shared GitHub Repository
+
+**Andrea**:

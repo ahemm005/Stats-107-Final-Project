@@ -28,16 +28,29 @@ summary(diabetes_data$Data_Value)
 sd(diabetes_data$Median_Household_Income, na.rm = TRUE)
 sd(diabetes_data$Data_Value, na.rm = TRUE)
 
-# 5. Linear regression model
+# 5. Regression model
+diabetes_data$Median_Household_Income = as.numeric(diabetes_data$Median_Household_Income)
+
 model <- lm(Data_Value ~ Median_Household_Income, data = diabetes_data)
+par(mfrow = c(2, 2))
+plot(model)
+# Model not linear, check another regression
 
-# 6. Statistical Results
-summary(model)
+model2 <- lm(
+  Data_Value ~ Median_Household_Income +
+    I(Median_Household_Income^2),
+  data = diabetes_data
+  )
+summary(model2)
+par(mfrow = c(2, 2))
+plot(model2)
+#Model shows a quadratic relationship!
 
-# 7. Scatter plot with a regression trendline
+
+# 6. Scatter plot with a regression trendline
 ggplot(diabetes_data, aes(x = Median_Household_Income, y = Data_Value)) +
   geom_point(alpha = 0.3, color = "steelblue") +
-  geom_smooth(method = "lm", color = "darkred", se = TRUE) +
+  geom_smooth(method = "lm", formula = y ~ x + I(x^2), color = "darkred", se = TRUE) +
   labs(
     title = "County Median Household Income vs. Diabetes Prevalence",
     subtitle = "CDC PLACES & US Census ACS Data",

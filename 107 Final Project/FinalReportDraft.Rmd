@@ -142,7 +142,7 @@ you aim to generate further data visualizations, describe them here.
   diabetes levels minimize at around \$108k median income. At every
   income over \$108k, prevalence starts to rise again.
 
-```{r}
+```{r, echo = FALSE}
 new_data <- read.csv("cleaned_county_data.csv")
 diabetes_data <- new_data %>% 
   filter(MeasureId == "DIABETES")

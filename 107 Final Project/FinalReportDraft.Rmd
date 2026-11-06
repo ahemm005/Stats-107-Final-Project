@@ -216,16 +216,16 @@ outcomes you hope to find
 
 # Summary of Individual Contribution
 
-**Vanessa**: Added to the 01_DataCleaning.R file: - Renamed columns for
-legibility - Removed first row of raw data (descriptive text) -
-Converted necessary variables to numerical values (R was reading them as
-text instead of numbers)
+**Vanessa**: Added to the 01_DataCleaning.R file: Renamed columns for
+legibility, removed first row of raw data (descriptive text), converted necessary variables to numerical values (R was reading them as
+text instead of numbers), created a new .csv file for the merged and clean data
 
-Created the 02_DiabetesAnalysis.R file: - Creating a dataframe for
-Diabetes disease - Summarize results from Diabetes dataframe (max, min,
-standard deviation for diabetes prevalence & household income) -
-Scatterplot with regression line for visualization, comparing median
+Created the 02_DiabetesAnalysis.R file: Creating a dataframe for
+Diabetes disease, summarize results from Diabetes dataframe (max, min,
+standard deviation for diabetes prevalence & household income), scatterpolt with regression line for visualization that compares median
 household income with diabetes prevalence
+
+Created the FinalReportDraft and added the appropriate sections required for the report including the Summary of Individual Contributions 
 
 **Alexandra**: Created the 00_requirements.R file: added all necessary
 packages.

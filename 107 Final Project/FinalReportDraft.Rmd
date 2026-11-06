@@ -241,6 +241,12 @@ Finalized FinalReportDraft.Rmd: Fixed the code on the plot portion,
 removed unnecessary info, changed bullet-pointed information into
 finalized paragraphs.
 
+Created 10_Cleaning&Processing.RMD file: wrote explanations, just
+transferred code.
+
+Created 11_Visualizations.RMD file: wrote explanations again, just
+transferred code.
+
 Created and shared GitHub Repository
 
 **Andrea**:

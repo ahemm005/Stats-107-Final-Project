@@ -1,0 +1,79 @@
+---
+title: "Cleaning & Processing"
+output:
+  pdf_document: default
+  html_document: default
+date: "2026-11-06"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+packages = installed.packages(c("tidyverse"))
+library(tidyverse)
+packages = installed.packages(c("dplyr"))
+library(dplyr)
+packages = installed.packages(c("ggplot2"))
+library(ggplot2)
+```
+
+## Call and Clean Data
+
+- #1 We first have to call the data and assign it to names.
+- #2 Focusing on our Median Income data set, we clean it up a little. First we rename two of the columns so that they're easier to refer to. Second, we make a new column, the FIPS code. We find the fips code by using the last 5 digits of the GeoId
+- #3 Now focusing on the disease prevalence dataset, we create a new column as a numeric of the location column.
+- #4 After we cleaned the data, we merge the data into one data set in order to make comparisons easier. Once merged, we clean the merged dataset by making the necessary columns numeric and keeping only the columns we plan on using
+- #5 With the merged data we create a csv so that we can call our clean data across different files without having to repeat this entire process of code.
+
+```{r}
+#1
+mhi = read.csv("../ACSDT5Y2023.B19013-Data.csv")
+dp = read.csv("../PLACES__Local_Data_for_Better_Health,_County_Data,_2025_release_20261102.csv")
+
+#2
+mhi <- mhi %>%
+  rename(
+    Median_Household_Income = B19013_001E,
+    Income_MOE = B19013_001M
+  )
+mhi$FIPS = substr(mhi$GEO_ID, nchar(mhi$GEO_ID) - 4 ,nchar(mhi$GEO_ID))
+
+#3
+dp$FIPS = as.numeric(dp$LocationID)
+
+#4
+comp_data = merge(mhi, dp, by = "FIPS")
+comp_data$Median_Household_Income <- as.numeric(comp_data$Median_Household_Income)
+comp_data$TotalPopulation <- as.numeric(comp_data$TotalPopulation)
+comp_data = comp_data %>%
+  select(
+    FIPS,
+    NAME,
+    Median_Household_Income,
+    Year,
+    Measure,
+    MeasureId,
+    Data_Value,
+    TotalPopulation
+  )
+
+#5
+write.csv(comp_data, "cleaned_county_data.csv", row.names = FALSE)
+```
+
+## Processing and brief analysis of data
+
+- #1 Give the new cleaned csv data a new name, easier to remember. 
+- #2 Make a set dataset focusing on our first topic of interest, diabetes.
+
+```{r}
+#1
+new_data <- read.csv("cleaned_county_data.csv")
+
+#2
+diabetes_data <- new_data %>% 
+  filter(MeasureId == "DIABETES")
+
+```
+
+At this point, we have all the data that we need for our preliminary analysis.

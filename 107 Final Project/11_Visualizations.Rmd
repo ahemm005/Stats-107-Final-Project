@@ -1,0 +1,94 @@
+---
+title: "Visualizations"
+output:
+  pdf_document: default
+  html_document: default
+date: "2026-11-06"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
+
+packages = installed.packages(c("tidyverse"))
+library(tidyverse)
+packages = installed.packages(c("dplyr"))
+library(dplyr)
+packages = installed.packages(c("ggplot2"))
+library(ggplot2)
+```
+
+## Diabetes visualizations
+
+- #1 First we call the data and assign the names accurately in order to be able to compare. 
+- #2 Make the income column numeric
+- #3 Test out different regression models to see what represents our data. Linear doesn't work for our model, must check other regressions
+- #4 Test out quadratic regression. Looks like a match!
+- #5 Lastly, create a scatter plot with a quadratic regression line to visualize the data and be able to analyze results
+
+```{r}
+#1
+new_data <- read.csv("cleaned_county_data.csv")
+diabetes_data <- new_data %>% 
+  filter(MeasureId == "DIABETES")
+
+#2
+diabetes_data$Median_Household_Income = as.numeric(diabetes_data$Median_Household_Income)
+
+#3
+model <- lm(Data_Value ~ Median_Household_Income, data = diabetes_data)
+par(mfrow = c(2, 2))
+plot(model)
+
+#4
+model2 <- lm(
+  Data_Value ~ Median_Household_Income +
+    I(Median_Household_Income^2),
+  data = diabetes_data
+  )
+summary(model2)
+par(mfrow = c(2, 2))
+plot(model2)
+
+#5
+ggplot(diabetes_data, aes(x = Median_Household_Income, y = Data_Value)) +
+  geom_point(alpha = 0.3, color = "steelblue") +
+  geom_smooth(method = "lm", formula = y ~ x + I(x^2), color = "darkred", se = TRUE) +
+  labs(
+    title = "County Median Household Income vs. Diabetes Prevalence",
+    subtitle = "CDC PLACES & US Census ACS Data",
+    x = "Median Household Income ($)",
+    y = "Diabetes Prevalence (%)"
+  )
+
+```
+
+## Preliminary visualizations for Depression data
+
+- #1 Since we found our diabetes data to be quadratic, we assumed that our depression data would be quadratic aswell. We made a graph with this assumption in mind. We made a new set comparing Measure Id's of Depression in comparison to median household income. Our observations of quadratic relationship held true, no other regression models needed.
+
+```{r}
+#1
+depression_plot <- new_data %>% 
+  mutate(Median_Household_Income = as.numeric(as.character(Median_Household_Income))) %>%
+  filter(MeasureId == "DEPRESSION") %>% 
+  ggplot(aes(x = Median_Household_Income, y = Data_Value)) + 
+  geom_point(alpha = 0.5, color = "darkorchid") + 
+  geom_smooth(
+    method = "lm",
+    formula = y ~ x + I(x^2),
+    color = "darkred",
+    se = TRUE
+  ) +
+  theme_minimal() + 
+  labs( 
+    title = "Depression Prevalence vs. Median Household Income", 
+    subtitle = "CDC PLACES & US Census ACS Data",
+    x = "Median Household Income ($)", 
+    y = "Depression Prevalence (%)" 
+  )
+
+print(depression_plot)
+
+```
+
+We have all the data cleaned, processed, and visualized. Now we can analyze our results and make sense of what they mean. 

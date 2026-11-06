@@ -85,9 +85,37 @@ comp_data = comp_data %>% select(
 Provide preliminary visualizations in the form of histograms, density plots, scatter
 plots, box-plots, and numerical summaries of the data, depending on the type of analysis. What do these visualizations suggest about the hypothesis, model or simulation you are aiming to perform? If you aim to generate further data visualizations, describe them here.
 
-- #correlation maps that justify the three bullet points under the Executive Summary
-- (2) (______ is higher/lower in higher/lower incomes)
-- (3) (depression is lower in higher incomes)
+- Diabetes is lower in higher incomes
+```{r}
+
+```
+- Depression is lower in higher incomes
+``` {r, echo=FALSE}
+library(dplyr)
+library(ggplot2)
+
+depression_plot <- comp_data %>% 
+  filter(`Health Status` == "Depression") %>% 
+  # make income numeric and make six bins
+  mutate(`Income_Bins` = cut(as.numeric(`Income (USD)`), breaks = 6)) %>% 
+  ggplot(aes(x = Income_Bins, y = `Percentage of Population`)) + 
+  # points added w/ help
+  geom_jitter(alpha = 0.5, color = "darkorchid", width = 0.2) + 
+  geom_boxplot(alpha = 0.3, outlier.shape = NA) + 
+  theme_minimal() + 
+  # axis labels tilted bc they are long, so they won't overlap
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) + 
+  # labeled my axes
+  labs( 
+    title = "Depression Prevalence across Income Brackets", 
+    x = "Income Intervals (USD)", 
+    y = "Percentage of Population" 
+  )
+
+print(depression_plot)
+
+
+```
 
 
 # Analysis
@@ -101,7 +129,9 @@ tests, procedures, and some ideas of what expected outcomes you hope to find
   - We expect a similar/different result from...
   - To test this expectation, we propose...
 - A closer look into Visualization #2 shows us that... depression in the US is negatively correlated with income. The x-axis shows income divided into 6 bins which replicate different tax brackets as income brackets. The y-axis shows the amount of health statuses per county showed "Depression".
-  - # Numerical summary here !!:
-  - We expect a similar result from... other mental health illnesses as a generalization due to their negative effect on the mind being      similar to depression's negative effect. However, causal impact is unclear in our findings as it is unknown whether income causes the      depression rate, vice versa, or another unexplored variable causes both.
-  - To test this expectation, we propose...
+  - The median depression rate lowered at each income bracket with...
+    - the lowest income bracket (25-51k/yr) at above 20%
+    - the highest income bracket (153-179k/yr) at below 20%
+  - We expect a similar result from other mental health illnesses as a generalization due to the illnesses negative effect on the mind       being similar to depression's negative effect. However, causal impact is unclear in our findings as it is unknown whether income causes    the depression rate, vice versa, or another unexplored variable causes both.
+  - To test this expectation, we propose lab and/or field experimentation to be done
 

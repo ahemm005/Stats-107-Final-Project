@@ -1,6 +1,6 @@
 ---
 title: "STAT107_Halfway_Report"
-author: "TEAM 5"
+author: "TEAM 6"
 date: "2026-11-03"
 output: pdf_document
 editor_options: 

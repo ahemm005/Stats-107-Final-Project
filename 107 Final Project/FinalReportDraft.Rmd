@@ -39,8 +39,9 @@ summary of your current results.
   correlated with income. That is, the data shows counties with higher
   median household incomes had less adverse health statuses across
   various types of health status and various income brackets. The report
-  will provide two analyses delving into income's relation to diabetes and depression and provide visual
-  maps which depict the correlation we found.
+  will provide two analyses delving into income's relation to diabetes
+  and depression and provide visual maps which depict the correlation we
+  found.
 
 # Intro
 
@@ -51,13 +52,13 @@ and syntax: sentences, paragraphs, and a narrative structure.
 
 - The question we are seeking to answer is whether income (whether it be
   higher or lower) has an effect on disease prevalence. Will median
-  household income show a correlation to disease proclivity? If an increase
-  in income does prove to have a negative affect on disease prevalence,
-  the information we find could possibly help find a solution to this
-  issue for interested parties. This can manifest in providing
-  easier access to necessary healthcare for lower-income individuals, or helping
-  better conditions to prevent the diseases from occurring.
-  Alternatively, certain companies and investors may benefit
+  household income show a correlation to disease proclivity? If an
+  increase in income does prove to have a negative affect on disease
+  prevalence, the information we find could possibly help find a
+  solution to this issue for interested parties. This can manifest in
+  providing easier access to necessary healthcare for lower-income
+  individuals, or helping better conditions to prevent the diseases from
+  occurring. Alternatively, certain companies and investors may benefit
   from such a relationship being found by providing insight into the
   likelihood of certain investments succeeding in a population due to
   their proximity to disease and their relative wealth.
@@ -71,24 +72,26 @@ comparing these numbers to CDC estimates from 2025 for health status.
 - Provide, in a series of 3-5 bullet points, what are the core
   conclusions and findings of your analysis so far.
 
-  1.  Negative correlation exists between increasing income and disease rate.
-      We are projecting our observations of diabetes and depression prevalence 
-      in correlation to income for this conclusion, but further analysis of 
-      different health statuses is possible.
-  2.  Through a regression model for diabetes, we see that Median Household
-      Income is statistically significant, and that it accurately
-      explains \~45% of the variation in diabetes prevalence.
+  1.  Negative correlation exists between increasing income and disease
+      rate. We are projecting our observations of diabetes and
+      depression prevalence in correlation to income for this
+      conclusion, but further analysis of different health statuses is
+      possible.
+  2.  Through a regression model for diabetes, we see that Median
+      Household Income is statistically significant, and that it
+      accurately explains \~45% of the variation in diabetes prevalence.
   3.  Through linear and quadratic regression we can see that the model
-      for diabetes is quadratic, with diabetes prevalence decreasing
-      at lower incomes, but slowly leveling out. At some point in the higher incomes, the line
-      even upturns very little. Minimum diabetes prevalence is around
-      median income of \$108k.
+      for diabetes is quadratic, with diabetes prevalence decreasing at
+      lower incomes, but slowly leveling out. At some point in the
+      higher incomes, the line even upturns very little. Minimum
+      diabetes prevalence is around median income of \$108k.
   4.  A graph for depression prevalence in correlation to income shows a
-      similar relationship. It is also a quadratic line representing a negative 
-      relationship with a decreasing prevalence as income increases. 
-      However, the most notable difference is the depression graph doesn't show 
-      any upturn at any moment, suggesting that prevalence continually 
-      decreases. Depression rates drop continually as income increases.
+      similar relationship. It is also a quadratic line representing a
+      negative relationship with a decreasing prevalence as income
+      increases. However, the most notable difference is the depression
+      graph doesn't show any upturn at any moment, suggesting that
+      prevalence continually decreases. Depression rates drop
+      continually as income increases.
 
 # Data
 
@@ -160,11 +163,11 @@ diabetes_plot = ggplot(diabetes_data, aes(x = Median_Household_Income, y = Data_
 diabetes_plot
 ```
 
-- We used a similar method to visualize depression percentages.
-  Similar to the diabetes graph, it is quadratic. However this graph
-  is different as it is a negative quadratic, so as income continues
-  to increase, prevalence for depression decreases. Interestingly, at higher incomes,
-  the decrease is slighter; the change becomes flatter.
+- We used a similar method to visualize depression percentages. Similar
+  to the diabetes graph, it is quadratic. However this graph is
+  different as it is a negative quadratic, so as income continues to
+  increase, prevalence for depression decreases. Interestingly, at
+  higher incomes, the decrease is slighter; the change becomes flatter.
 
 ```{r, echo=FALSE}
 packages = installed.packages(c("ggplot2"))
@@ -207,8 +210,8 @@ outcomes you hope to find
   negative relationship against median income or if there are some that
   have positive correlation. In the end, we hope to find at least one
   disease that has a positive correlation. We strive to find logical
-  reasoning as to why this phenomena takes place– is it simply access
-  to better healthcare? is it inability to spend money on better
+  reasoning as to why this phenomena takes place– is it simply access to
+  better healthcare? is it inability to spend money on better
   food/accomodations? is it a difference in way of life and expectations
   between different income brackets? By comparing data, reading
   literature, and analyzing our results we intend on creating some sort
@@ -217,17 +220,22 @@ outcomes you hope to find
 # Summary of Individual Contribution
 
 **Vanessa**: Added to the 01_DataCleaning.R file: Renamed columns for
-legibility, removed first row of raw data (descriptive text), converted necessary variables to numerical values (R was reading them as
-text instead of numbers), created a new .csv file for the merged and clean data
+legibility, removed first row of raw data (descriptive text), converted
+necessary variables to numerical values (R was reading them as text
+instead of numbers), created a new .csv file for the merged and clean
+data
 
 Created the 02_DiabetesAnalysis.R file: Creating a dataframe for
 Diabetes disease, summarize results from Diabetes dataframe (max, min,
-standard deviation for diabetes prevalence & household income), scatterpolt with regression line for visualization that compares median
+standard deviation for diabetes prevalence & household income),
+scatterpolt with regression line for visualization that compares median
 household income with diabetes prevalence
 
-Created the FinalReportDraft and added the appropriate sections required for the report including the Summary of Individual Contributions
+Created the FinalReportDraft and added the appropriate sections required
+for the report including the Summary of Individual Contributions
 
-Contributed to README file describing the raw data sets, and the 00, 01, and 02 r files.
+Contributed to README file describing the raw data sets, and the 00, 01,
+and 02 r files.
 
 **Alexandra**: Created the 00_requirements.R file: added all necessary
 packages.
@@ -251,13 +259,17 @@ transferred code.
 
 Created and shared GitHub Repository
 
-**Andrea**: Edited FinalReportDraft.Rmd (the report, or report) into an outlined draft report. Completed ABSTRACT, INTRO, and DATA drafts. Outlined Analysis, Visualization, and Executive Summary drafts.
+**Andrea**: Edited FinalReportDraft.Rmd (the report, or report) into an
+outlined draft report. Completed ABSTRACT, INTRO, and DATA drafts.
+Outlined Analysis, Visualization, and Executive Summary drafts.
 
-Initially edited the report to include data cleaning (renamed variables, removed unneeded data) for ease of access.
-(History @ https://github.com/ahemm005/Stats-107-Final-Project/commit/8d2bf25e9903be5215166167e943f4282743f62f)
+Initially edited the report to include data cleaning (renamed variables,
+removed unneeded data) for ease of access. (History \@
+<https://github.com/ahemm005/Stats-107-Final-Project/commit/8d2bf25e9903be5215166167e943f4282743f62f>)
 
 Created depression analysis with code in the report.
 
-Proofread and edited finalized report for readability and clarity of purpose.
+Proofread and edited finalized report for readability and clarity of
+purpose.
 
 Created README guide for reproducability.

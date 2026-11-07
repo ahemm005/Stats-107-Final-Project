@@ -1,5 +1,5 @@
 # Stats 107 Final Project / Alexandra Hemmerling, Vanessa Phavong, Andrea Ayala
-Hello!! Welcome to STAT107 group 5’s Final Project repository. In our project, we analyze the relationship between the prevalence of 
+Hello!! Welcome to STAT107 group 6’s Final Project repository. In our project, we analyze the relationship between the prevalence of 
 different diseases and median household income. Our end goal with this project is to find an answer as to why there is a correlation (if 
 any)! Use this guide to find our report in the repository and reproduce our analyses yourself! (Below the guide, we have added an appendix with specific file information.)
 
